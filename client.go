@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"strings"
 
@@ -125,7 +126,19 @@ func (c *Client) sendRequest(req *http.Request, v Response) error {
 		v.SetHeader(res.Header)
 	}
 
-	return decodeResponse(res.Body, v)
+	resBytes, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(resBytes, &v)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+	//return decodeResponse(res.Body, v)
 }
 
 func (c *Client) sendRequestRaw(req *http.Request) (body io.ReadCloser, err error) {
