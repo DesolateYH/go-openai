@@ -19,6 +19,7 @@ const (
 	APITypeOpenAI  APIType = "OPEN_AI"
 	APITypeAzure   APIType = "AZURE"
 	APITypeAzureAD APIType = "AZURE_AD"
+	APITypeProxy   APIType = "PROXY"
 )
 
 const AzureAPIKeyHeader = "api-key"
